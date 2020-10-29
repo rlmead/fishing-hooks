@@ -45,6 +45,35 @@ function App() {
     },
   ];
 
+  // function to add/remove items from cart
+  // to be called by buttons next to each item
+  const updateCart = (item, num) => {
+    // create a temporary cart array to hold updates
+    let tempCart = cart;
+    let index = cart.map(i => i.name).indexOf(item);
+    // add item to cart array if it's not already there
+    if (index === -1) {
+      if (num > 0) {
+        tempCart.push({ name: item, count: num });
+      }
+    // update item in cart array if it's already there
+    } else {
+      tempCart[index].count += num;
+      // account for weird behavior -
+      // the cart never seems to forget anything that was once added
+      if (tempCart[index].count < 1) {
+        tempCart[index].count = 0;
+      }
+    }
+    // remove item from index if count is brought down below 1
+    index = tempCart.map(i => i.name).indexOf(item);
+    if (index != -1 && tempCart[index].count < 1) {
+    tempCart = tempCart.splice(index, 1);
+    }
+    // update main cart variable
+    setCart(tempCart);
+  }
+
   // function with switch statement to determine what component to render
   // according to the current view
   const switchView = (view) => {
@@ -52,13 +81,13 @@ function App() {
       case 'cart':
         return (
           <Cart
-            cart={cart}
+            data={cart}
           />
         )
       case 'shipping':
         return (
           <Shipping
-            userInfo={userInfo}
+            data={userInfo}
             setUserInfo={setUserInfo}
           />
         )
@@ -66,16 +95,11 @@ function App() {
         return (
           <Store
             data={store}
+            updateCart={updateCart}
           />
         )
     }
   };
-
-  // function to add/remove items from cart
-  // to be called by buttons next to each item
-  const updateCart = (item, num) => {
-    console.log(`adding ${num} ${item}s to cart`);
-  }
 
   return (
     <div className="App">

@@ -7,7 +7,7 @@ import { faMinus } from '@fortawesome/free-solid-svg-icons';
 function Store(props) {
   // render 
   return (
-    <ListGroup>
+    <ListGroup className='mb-2'>
       <ListGroupItem>
         <Row>
           <Col xs='3' />
@@ -22,13 +22,14 @@ function Store(props) {
         {
           props.data.map((item, index) => {
             return (
-              <ListGroupItem>
+              <ListGroupItem
+              key={index}>
                 <Row>
                   <Col xs='1'>
-                    <FontAwesomeIcon icon={faPlus} />
+                    <FontAwesomeIcon icon={faPlus} onClick={() => props.updateCart(item.name, 1)}/>
                   </Col>
                   <Col xs='2'>
-                    <FontAwesomeIcon icon={faMinus} />
+                    <FontAwesomeIcon icon={faMinus} onClick={() => props.updateCart(item.name, -1)}/>
                   </Col>
                   <Col xs='6'>
                     <p>{item.name}</p>

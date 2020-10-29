@@ -6,9 +6,9 @@ function Total(props) {
     (props.data.length > 0)
     ? props.data.map(item => item.cost).reduce((acc, curr) => acc + curr)
     : 0;
-  let tax = subtotal*.06.toFixed(2);
+  let tax = subtotal*.06;
   let shipping = 0;
-  let total = subtotal + tax + shipping;
+  let total = subtotal+tax+shipping;
   // render 
   return (
     <ListGroup>
@@ -17,19 +17,19 @@ function Total(props) {
           <Col xs='6'>
             <p style={{ fontWeight: 'bold' }}>subtotal</p>
           </Col>
-          <Col xs='6'>${subtotal}</Col>
+          <Col xs='6'>${parseFloat(subtotal).toFixed(2)}</Col>
         </Row>
         <Row>
           <Col xs='6'>
             <p style={{ fontWeight: 'bold' }}>tax</p>
           </Col>
-          <Col xs='6'>${tax}</Col>
+          <Col xs='6'>${parseFloat(tax).toFixed(2)}</Col>
         </Row>
         <Row>
           <Col xs='6'>
             <p style={{ fontWeight: 'bold' }}>shipping</p>
           </Col>
-          <Col xs='6'>${shipping}</Col>
+          <Col xs='6'>${parseFloat(shipping).toFixed(2)}</Col>
         </Row>
       </ListGroupItem>
       <ListGroupItem>
@@ -37,7 +37,7 @@ function Total(props) {
           <Col xs='6'>
             <p style={{ fontWeight: 'bold' }}>total</p>
           </Col>
-          <Col xs='6'>${total}</Col>
+          <Col xs='6'>${parseFloat(total).toFixed(2)}</Col>
         </Row>
       </ListGroupItem>
     </ListGroup>

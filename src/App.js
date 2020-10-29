@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Total from './Total.js'
 import Store from './Store.js';
 import Cart from './Cart.js';
 import Shipping from './Shipping.js'
@@ -117,11 +118,7 @@ function App() {
           {/* show the running total on the side of every page */}
           <Col
             md='5'>
-            <ListGroup>
-              <ListGroupItem>
-                'total'
-            </ListGroupItem>
-            </ListGroup>
+            <Total data={cart} />
           </Col>
         </Row>
       </Container>

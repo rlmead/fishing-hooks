@@ -1,19 +1,50 @@
 import { useState } from 'react';
 import Store from './Store.js';
 import Cart from './Cart.js';
+import Shipping from './Shipping.js'
+import Checkout from './Checkout.js'
+
 import { Jumbotron, Nav, NavItem, NavLink, Container, Row, Col } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   // declare a stateful object to keep track of what's in user's cart
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState([]);
   // declare a stateful string to track the view of the store
-  const [view, setView] = useState('store')
+  const [view, setView] = useState('store');
 
-  // declare an array to represent the store,
-  // its departments,
-  // and its merchandise
+  // declare an array to track all store views (tabs)
+  const views = ['store', 'cart', 'shipping', 'checkout'];
+
+  // declare a switch statement to determine what component to render
+  // according to the current view
+  function switchView(view) {
+    switch (view) {
+      case 'cart':
+        return (
+          <Cart
+            data={cart}
+          />
+        )
+      case 'shipping':
+        return (
+          <Shipping />
+        )
+      case 'checkout':
+        return (
+          <Checkout />
+        )
+      default:
+        return (
+          <Store
+            data={store}
+          />
+        )
+    }
+  };
+
+  // declare an array to hold the store's merchandise
   const store = [
     {
       item: 'boat',
@@ -31,30 +62,11 @@ function App() {
       item: 'sardines',
       cost: 3
     },
-  ]
+  ];
 
-  // declare an array to track all store views (tabs)
-  // gathering store department info from store array
-  const views = ['store', 'cart', 'shipping', 'checkout'];
-
-  // declare a switch statement to determine what component to render
-  // according to the current view
-  function switchView(view) {
-    switch (view) {
-      case 'cart':
-        return (
-          <Cart
-            data={cart}
-          />
-        )
-      default:
-        return (
-          <Store
-            data={store}
-          />
-        )
-    }
-  };
+  function updateCart(item,num) {
+    console.log(`add ${item} to card`);
+  }
 
   return (
     <div className="App">

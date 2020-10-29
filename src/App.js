@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Jumbotron, Container, Nav, NavItem, NavLink, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import Shop from './Shop.js';
+import { Jumbotron, Nav, NavItem, NavLink } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
 
@@ -76,7 +77,10 @@ function App() {
           })
         }
       </Nav>
-
+      {/* render the following component based on the current view */}
+      <Shop
+      data={store[store.map(item => item.dept).indexOf(view)]}
+      />
     </div>
   );
 }

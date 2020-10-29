@@ -1,9 +1,10 @@
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
-function Shop(props) {
+function Store(props) {
+    // render 
     return(
-        <div>{props.data.merch[0].item}</div>
+        <div>{props.data[0].item}</div>
     )
 }
 
-export default Shop;
+export default Store;

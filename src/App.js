@@ -1,62 +1,72 @@
 import { useState } from 'react';
-import Shop from './Shop.js';
-import { Jumbotron, Nav, NavItem, NavLink } from 'reactstrap';
+import Store from './Store.js';
+import Cart from './Cart.js';
+import { Jumbotron, Nav, NavItem, NavLink, Container, Row, Col } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   // declare a stateful object to keep track of what's in user's cart
-  const [cart, setCart] = useState({})
-  // declare a stateful string to track the view of the shop
-  const [view, setView] = useState('equipment')
+  const [cart, setCart] = useState([])
+  // declare a stateful string to track the view of the store
+  const [view, setView] = useState('store')
 
   // declare an array to represent the store,
   // its departments,
   // and its merchandise
   const store = [
     {
-      dept: 'equipment',
-      merch: [
-        {
-          item: 'boat',
-          cost: 3000
-        },
-        {
-          item: 'fishing pole',
-          cost: 30
-        },
-      ]
+      item: 'boat',
+      cost: 3000
     },
     {
-      dept: 'snacks',
-      merch: [
-        {
-          item: 'gummy worms',
-          cost: 3
-        },
-        {
-          item: 'sardines',
-          cost: 3
-        },
-      ]
+      item: 'fishing pole',
+      cost: 30
+    },
+    {
+      item: 'gummy worms',
+      cost: 3
+    },
+    {
+      item: 'sardines',
+      cost: 3
     },
   ]
 
-  // declare an array to track all shop views (tabs)
-  // gathering shop department info from store array
-  const views = store.map(item => item.dept).concat(['checkout']);
+  // declare an array to track all store views (tabs)
+  // gathering store department info from store array
+  const views = ['store', 'cart', 'shipping', 'checkout'];
+
+  // declare a switch statement to determine what component to render
+  // according to the current view
+  function switchView(view) {
+    switch (view) {
+      case 'cart':
+        return (
+          <Cart
+            data={cart}
+          />
+        )
+      default:
+        return (
+          <Store
+            data={store}
+          />
+        )
+    }
+  };
 
   return (
     <div className="App">
       {/* jumbotron header */}
       <Jumbotron
         fluid
-        className='mb-1 text-left text-light'
+        className='mb-0 text-left text-light'
         style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1524785281156-c3c68d1e03c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)', backgroundSize: '100%' }}>
         <h1>bluegrass bait & tackle</h1>
         <h2>lex ky</h2>
       </Jumbotron>
-      {/* navbar with pages equipment, snacks, and checkout */}
+      {/* navbar with views equipment, snacks, and checkout */}
       <Nav
         justified
         tabs
@@ -77,10 +87,20 @@ function App() {
           })
         }
       </Nav>
-      {/* render the following component based on the current view */}
-      <Shop
-      data={store[store.map(item => item.dept).indexOf(view)]}
-      />
+      {/* choose and render the body component based on the current view */}
+      <Container>
+        <Row className='mt-2'>
+        <Col
+        sm='8'>
+          {switchView(view)}
+        </Col>
+        <Col
+        sm='4'
+        className='border border-secondary'>
+          'total'
+        </Col>
+        </Row>
+      </Container>
     </div>
   );
 }

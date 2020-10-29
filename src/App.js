@@ -50,11 +50,11 @@ function App() {
   const updateCart = (item, num) => {
     // create a temporary cart array to hold updates
     let tempCart = cart;
-    let index = cart.map(i => i.name).indexOf(item);
+    let index = cart.map(i => i.name).indexOf(item);;
     // add item to cart array if it's not already there
     if (index === -1) {
       if (num > 0) {
-        tempCart.push({ name: item, count: num });
+        tempCart.push({ name: item, count: num, cost: 0 });
       }
     // update item in cart array if it's already there
     } else {
@@ -65,11 +65,14 @@ function App() {
         tempCart[index].count = 0;
       }
     }
-    // remove item from index if count is brought down below 1
-    index = tempCart.map(i => i.name).indexOf(item);
-    if (index != -1 && tempCart[index].count < 1) {
-    tempCart = tempCart.splice(index, 1);
-    }
+    // filter tempCart for anything with count < 1
+    tempCart = tempCart.filter(i => i.count > 0);
+    // update all tempCart costs with forEach
+    tempCart.forEach(i => {
+      let cost = store[store.map(n => n.name).indexOf(i.name)].cost;
+      i.cost = i.count*cost;
+    });
+    console.log(cart);
     // update main cart variable
     setCart(tempCart);
   }

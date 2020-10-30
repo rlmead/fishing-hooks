@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Total from './Total.js'
 import Store from './Store.js';
 import Shipping from './Shipping.js'
@@ -7,8 +7,23 @@ import { Jumbotron, Nav, NavItem, NavLink, Container, Row, Col } from 'reactstra
 function App() {
   // stateful object to keep track of what's in user's cart
   const [cart, setCart] = useState([]);
+
   // stateful string to track the view of the store
   const [view, setView] = useState('store');
+
+  // stateful string to update checkout button,
+  // updated with useEffect
+  const [buttonState, setButtonState] = useState('add items to enable checkout')
+  useEffect(() => {
+    if (cart.length === 0) {
+      setButtonState('add items to enable checkout');
+    } else if (document.getElementById('name') === null || document.getElementById('name').value === '') {
+      setButtonState('add shipping info to enable checkout');
+    } else {
+      setButtonState('checkout');
+    }
+  })
+
   // track user/shipping info - does this need to be stateful?
   const [userInfo, setUserInfo] = useState({
     firstName: '',
@@ -31,7 +46,15 @@ function App() {
       cost: 3000
     },
     {
+      name: 'sonar system',
+      cost: 300
+    },
+    {
       name: 'fishing pole',
+      cost: 30
+    },
+    {
+      name: 'hip waders',
       cost: 30
     },
     {
@@ -71,7 +94,6 @@ function App() {
       let cost = store[store.map(n => n.name).indexOf(i.name)].cost;
       i.cost = i.count*cost;
     });
-    console.log(cart);
     // update main cart variable
     setCart(tempCart);
   }
@@ -145,7 +167,7 @@ function App() {
           {/* show the running total on the side of every page */}
           <Col
             md='5'>
-            <Total data={cart} />
+            <Total data={cart} buttonState={buttonState}/>
           </Col>
         </Row>
       </Container>

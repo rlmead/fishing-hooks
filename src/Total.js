@@ -46,7 +46,7 @@ function Total(props) {
         {
           (props.buttonState !== 'checkout')
           ? <Button disabled>{props.buttonState}</Button>
-          : <Button className='btn-primary'>{props.buttonState}</Button>
+          : <Button className='btn-primary' onClick={() => alert('enjoy your stuff!')}>{props.buttonState}</Button>
         }
       </div>
     </>

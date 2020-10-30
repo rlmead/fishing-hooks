@@ -11,20 +11,7 @@ function App() {
   // stateful string to track the view of the store
   const [view, setView] = useState('store');
 
-  // stateful string to update checkout button,
-  // updated with useEffect
-  const [buttonState, setButtonState] = useState('add items to enable checkout')
-  useEffect(() => {
-    if (cart.length === 0) {
-      setButtonState('add items to enable checkout');
-    } else if (document.getElementById('name') === null || document.getElementById('name').value === '') {
-      setButtonState('add shipping info to enable checkout');
-    } else {
-      setButtonState('checkout');
-    }
-  })
-
-  // track user/shipping info - does this need to be stateful?
+  // track user/shipping info
   const [shippingInfo, setShippingInfo] = useState([
     {key: 'name', value: ''},
     {key: 'address1', value: ''},
@@ -38,8 +25,22 @@ function App() {
     let index = tempShippingInfo.map(item => item.key).indexOf(event.target.id);
     tempShippingInfo[index].value = event.target.value;
     setShippingInfo(tempShippingInfo);
-    console.log(shippingInfo);
   }
+
+  // stateful string to update checkout button,
+  // updated with useEffect
+  const [buttonState, setButtonState] = useState('add items to enable checkout')
+  useEffect(() => {
+    // require cart to be non-empty to enable checkout
+    if (cart.length === 0) {
+      setButtonState('add items to enable checkout');
+    // require shipping info to be complete to enable checkout - not working
+    } else if (shippingInfo.filter(item => item.key !== 'address2').filter(item => item.value === '').length > 0) {
+      setButtonState('add shipping info to enable checkout');
+    } else {
+      setButtonState('checkout');
+    }
+  })
 
   // array listing all pages
   // for navbar tabs and to determine view

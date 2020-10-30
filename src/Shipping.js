@@ -1,21 +1,21 @@
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
-function Shipping() {
+function Shipping(props) {
     // render 
     return (
         <Form>
             <FormGroup>
                 <Label>customer name</Label>
-                <Input id='name' placeholder='full name'></Input>
+                <Input id='name' placeholder='first and last name' onChange={props.updateShippingInfo}></Input>
             </FormGroup>
             <FormGroup>
                 <Label>street address</Label>
-                <Input id='address1' placeholder='address line 1' className='mb-2'></Input>
-                <Input id='address2' placeholder='address line 2'></Input>
+                <Input id='address1' placeholder='address line 1' className='mb-2' onChange={props.updateShippingInfo}></Input>
+                <Input id='address2' placeholder='address line 2' onChange={props.updateShippingInfo}></Input>
             </FormGroup>
             <FormGroup>
-                <Label for="exampleSelect">State/Territory</Label>
-                <Input type='select' name='select' id='state'>
+                <Label for="exampleSelect">state/territory</Label>
+                <Input id='state' type='select' name='select' onChange={props.updateShippingInfo}>
                     <option></option>
                     <option>Alabama</option>
                     <option>Alaska</option>
@@ -74,6 +74,10 @@ function Shipping() {
                     <option>Wisconsin</option>
                     <option>Wyoming</option>
                 </Input>
+            </FormGroup>
+            <FormGroup>
+                <Label>zip code</Label>
+                <Input id='zipCode' placeholder='00000' onChange={props.updateShippingInfo}></Input>
             </FormGroup>
         </Form>
     )

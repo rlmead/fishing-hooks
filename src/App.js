@@ -25,15 +25,21 @@ function App() {
   })
 
   // track user/shipping info - does this need to be stateful?
-  const [userInfo, setUserInfo] = useState({
-    firstName: '',
-    lastName: '',
-    address: '',
-    address2: '',
-    country: '',
-    state: '',
-    zipCode: ''
-  });
+  const [shippingInfo, setShippingInfo] = useState([
+    {key: 'name', value: ''},
+    {key: 'address1', value: ''},
+    {key: 'address2', value: ''},
+    {key: 'state', value: ''},
+    {key: 'zipCode', value: ''}
+  ]);
+
+  const updateShippingInfo = (event) => {
+    let tempShippingInfo = shippingInfo;
+    let index = tempShippingInfo.map(item => item.key).indexOf(event.target.id);
+    tempShippingInfo[index].value = event.target.value;
+    setShippingInfo(tempShippingInfo);
+    console.log(shippingInfo);
+  }
 
   // array listing all pages
   // for navbar tabs and to determine view
@@ -112,8 +118,9 @@ function App() {
       case 'shipping':
         return (
           <Shipping
-            data={userInfo}
-            setUserInfo={setUserInfo}
+            data={shippingInfo}
+            setUserInfo={setShippingInfo}
+            updateShippingInfo={updateShippingInfo}
           />
         )
       default:

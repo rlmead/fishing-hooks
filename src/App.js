@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import Total from './Total.js'
 import Store from './Store.js';
-import Cart from './Cart.js';
 import Shipping from './Shipping.js'
-import { Jumbotron, Nav, NavItem, NavLink, Container, Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
+import { Jumbotron, Nav, NavItem, NavLink, Container, Row, Col } from 'reactstrap';
 
 function App() {
   // stateful object to keep track of what's in user's cart
@@ -83,8 +82,9 @@ function App() {
     switch (view) {
       case 'cart':
         return (
-          <Cart
+          <Store
             data={cart}
+            updateCart={updateCart}
           />
         )
       case 'shipping':

@@ -11,7 +11,7 @@ function Total(props) {
   let total = subtotal+tax+shipping;
   // render 
   return (
-    <ListGroup>
+    <ListGroup className='text-right'>
       <ListGroupItem>
         <Row>
           <Col xs='6'>

@@ -1,5 +1,4 @@
-import { data } from 'jquery';
-import { ListGroup, ListGroupItem, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { ListGroup, ListGroupItem, Row, Col } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
@@ -32,10 +31,17 @@ function Store(props) {
                     <FontAwesomeIcon icon={faMinus} onClick={() => props.updateCart(item.name, -1)}/>
                   </Col>
                   <Col xs='6'>
-                    <p>{item.name}</p>
+                  {/* create item string according to whether the view is store or cart, and whether the cart contains multiples of this item, and whether the item name ends in 's' */}
+                    <p>{item.count
+                        ? item.count+' '+item.name+
+                          (item.count > 1
+                            ? (item.name[item.name.length-1] === 's' ? 'es'
+                            : 's')
+                          : '')
+                        : item.name}</p>
                   </Col>
                   <Col xs='3'>
-                    <p>${item.cost}</p>
+                    <p className='text-right'>${item.cost}</p>
                   </Col>
                 </Row>
               </ListGroupItem>
